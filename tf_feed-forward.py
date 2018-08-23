@@ -12,19 +12,19 @@ Placeholers - SIZE can be variable
 weights = tf.Variable(initial_value=[[0.3], [0.1], [0.8]], dtype=tf.float32)  
 bias = tf.Variable(initial_value=[[1]], dtype=tf.float32)  
    
-# Preparing inputs of the activation function  
-af_input1 = tf.matmul(input1, weights) + bias
+#Preparing inputs of the activation function  
+af = tf.matmul(input1, weights) + bias
    
-# Activation function of the output layer neuron  
-sigm = tf.nn.sigmoid(af_input1)  
+#Activation function definition  
+sigm = tf.nn.sigmoid(af)  
    
-# Measuring the prediction error of the network after being trained  
+#Measuring the prediction error  
 error = tf.reduce_sum(output1 - sigm)  
    
-# Minimizing the prediction error using gradient descent optimizer  
+#Minimizing the prediction error using gradient descent optimizer  
 train_op = tf.train.GradientDescentOptimizer(learning_rate=0.05).minimize(error)  
   
-#TF session starts 
+#TFsession starts 
 sess = tf.Session()  
   
 # Initializing the tf Variables (weights and bias)  
@@ -42,14 +42,14 @@ output1_data = [[1],
                          [0],  
                          [0]]  
  
-# Training loop of the neural network  
-for step in range(10000):  
+#Training loop of the neural network  
+for i in range(10000):  
     sess.run(fetches=[train_op], feed_dict={
                                   input1: input1_data,  
                                    output1: output1_data})  
   
-# Class scores of some testing data  
+#Class scores of some testing data  
 print("Expected Scores : ", sess.run(fetches=sigm, feed_dict={input1: [[248, 80, 68],[0, 0, 255]]}))  
  
-# Closing the tf Session to free resources  
+#Closing the tf Session to free resources  
 sess.close()
